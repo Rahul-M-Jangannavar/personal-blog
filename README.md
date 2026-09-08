@@ -4,9 +4,15 @@ My personal blog, whose front page is my introduction. Built as a learning proje
 a Django REST Framework API serving JSON, and a separate React single-page app
 consuming it.
 
-The full learning roadmap lives in the `react-django-blog-path` canvas. This README is
-the **spec** — it describes what the finished site does, decided up front so the later
-phases are mechanical.
+This README is the **spec** — it describes what the finished site does, decided up front
+so the later phases are mechanical.
+
+The six-phase learning roadmap, with progress tracking, lives in a Cursor canvas. Open it
+from Cursor with File → Open File:
+
+```
+C:\Users\rahulja\.cursor\projects\c-Users-rahulja-LearnRctAndPython\canvases\react-django-blog-path.canvas.tsx
+```
 
 ## Stack
 
