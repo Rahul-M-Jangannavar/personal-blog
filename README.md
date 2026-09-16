@@ -87,5 +87,22 @@ LearnRctAndPython/
 
 ## Running locally
 
-Not yet — the backend arrives in Phase 1 and the frontend in Phase 3. This section gets
-filled in as each half exists.
+Backend:
+
+```bash
+cd backend
+python -m venv .venv
+.\.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
+Then:
+
+- Admin: http://127.0.0.1:8000/admin/ — add your Profile, Tags, and published Posts
+- API docs: http://127.0.0.1:8000/api/docs/
+- Login: `POST /api/auth/token/` with `{"username": "...", "password": "..."}`
+
+Run tests with `python manage.py test`. The React app arrives in Phase 3.
