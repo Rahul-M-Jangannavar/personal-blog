@@ -18,6 +18,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "name",
             "headline",
             "bio",
+            "about",
             "avatar",
             "location",
             "email",
