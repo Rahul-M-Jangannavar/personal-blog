@@ -34,11 +34,15 @@ function fakeApi(path) {
 
 // 1. Return just the profile's name. Mark the function `async` and `await` fakeApi.
 async function getProfileName() {
+  const name= await fakeApi("/api/profile/");
+  return name.name
   // TODO
 }
 
 // 2. Return how many posts the API reports.
 async function getPostCount() {
+  const posts= await fakeApi("/api/posts/");
+  return posts.length;
   // TODO
 }
 
@@ -46,12 +50,24 @@ async function getPostCount() {
 //    Wrap the await in try/catch. Every React screen needs this shape:
 //    something to render, or something to apologise with.
 async function safeGet(path) {
+  try{
+    const data= await fakeApi(path);
+    return data
+
+  }
+  catch(error){
+    return {error:error.message}
+  }
   // TODO
 }
 
 // 4. Fetch the profile and the post list AT THE SAME TIME with Promise.all,
 //    then return { name, count }. Two sequential awaits would take twice as long.
 async function loadHomePage() {
+    const [a, b] = await Promise.all([fakeApi("/api/profile/"), fakeApi("/api/posts/")]);
+    const res={"name":a.name,"count":b.length}
+    return res
+
   // TODO
 }
 
@@ -59,8 +75,14 @@ async function loadHomePage() {
 //    in the same order. Sometimes sequential is what you actually want.
 //    A single post lives at `/api/posts/<slug>/` — mind the trailing slash, Django cares.
 async function titlesInOrder(slugs) {
+
+  const titles=[]
   // TODO
-  return [];
+  for (const each of slugs){
+    const want=await fakeApi(`/api/posts/${each}/`)
+    titles.push(want.title)
+  }
+  return titles
 }
 
 // ---------------------------------------------------------------------------

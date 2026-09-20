@@ -13,6 +13,10 @@ class Profile(models.Model):
         help_text='Short line under your name, e.g. "Software engineer learning React".',
     )
     bio = models.TextField(help_text="Full introduction. Markdown is fine; React will render it later.")
+    about = models.TextField(
+        blank=True,
+        help_text="About me. Markdown is fine; React will render it later.",
+    )
     avatar = models.ImageField(
         upload_to="avatars/",
         blank=True,

@@ -105,4 +105,16 @@ Then:
 - API docs: http://127.0.0.1:8000/api/docs/
 - Login: `POST /api/auth/token/` with `{"username": "...", "password": "..."}`
 
-Run tests with `python manage.py test`. The React app arrives in Phase 3.
+Run tests with `python manage.py test`.
+
+Frontend (Phase 4 — live API). Run Django first, then:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open http://localhost:5173/. Vite proxies `/api` and `/media` to
+`http://127.0.0.1:8000`. Log in with your superuser at `/login`, then write a
+post at `/studio`.

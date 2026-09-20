@@ -51,17 +51,18 @@ const posts = [
 //    Chain .filter() then .map() — this is the single most common line in React.
 function publishedTitles(all) {
   // TODO
-  return [];
+  return all.filter((post)=> post.status.includes("published" )).map((post)=>post.title);
 }
 
 // 2. Total word count across every post, using .reduce().
 function totalWords(all) {
   // TODO
-  return 0;
+  return all.reduce((runningTotal,post)=>runningTotal+post.words,0);
 }
 
 // 3. The first post still in draft, using .find().
 function firstDraft(all) {
+  return all.find((post)=>post.status.includes("draft"))
   // TODO
 }
 
@@ -70,35 +71,35 @@ function firstDraft(all) {
 //    React re-renders based on new arrays, so never mutating is a habit worth building.
 function newestFirst(all) {
   // TODO
-  return [];
+  return all.filter((post)=>post.publishedAt!=null).sort((a,b)=>(b.publishedAt ?? "").localeCompare(a.publishedAt??""));
 }
 
 // 5. A one-line summary like "React in one week — 1450 words".
 //    Destructure `title` and `words` in the parameter list, and use a template literal.
 function summarize(post) {
   // TODO
-  return "";
+  return `${post.title} — ${post.words} words`;
 }
 
 // 6. A NEW post object with an `excerpt` field added, leaving the original untouched.
 //    Use the spread operator.
 function withExcerpt(post, excerpt) {
   // TODO
-  return post;
+  return {... post,excerpt:excerpt};
 }
 
 // 7. The author's name, falling back to "Anonymous" when there is no author.
 //    Use optional chaining (?.) with nullish coalescing (??).
 function authorName(post) {
   // TODO
-  return "";
+  return post.author?.name??"Anonymous";
 }
 
 // 8. The post's first tag, or "untagged" when it has none.
 //    Destructure the first element out of the tags array.
 function firstTag(post) {
   // TODO
-  return "";
+  return post.tags[0]??"untagged";
 }
 
 // ---------------------------------------------------------------------------
