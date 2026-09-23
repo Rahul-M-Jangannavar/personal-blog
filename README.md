@@ -118,3 +118,22 @@ npm run dev
 Open http://localhost:5173/. Vite proxies `/api` and `/media` to
 `http://127.0.0.1:8000`. Log in with your superuser at `/login`, then write a
 post at `/studio`.
+
+## Deploy the API (Render)
+
+The React app stays on localhost until the API has a public URL.
+
+1. Push this repo to GitHub.
+2. Sign up at https://dashboard.render.com and **New → Blueprint** (or Web Service).
+3. Root directory: `backend`.
+4. Build: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
+5. Start: `gunicorn config.wsgi:application`
+6. Add a **Postgres** database and copy its Internal Database URL into `DATABASE_URL`.
+7. Env vars:
+   - `DEBUG=False`
+   - `SECRET_KEY` = a long random string (Render can generate it)
+   - `PYTHON_VERSION=3.12.3`
+8. After the first deploy, open `https://YOUR-SERVICE.onrender.com/api/docs/` and `/admin/`.
+9. SSH is not available — use the Render shell, or `python manage.py createsuperuser` from a one-off job / the service shell.
+
+Avatars and cover images on local disk will disappear when Render restarts. Cloudinary/S3 is a follow-up.

@@ -13,20 +13,38 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 
+import dj_database_url
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+_env_file = BASE_DIR / ".env"
+if _env_file.exists():
+    env.read_env(_env_file)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j#--si5+omju2xl=+ys#ny13fv(k7(z2&(qeui5$bhu@g37fv$'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = env.bool("DEBUG", default=True)
+SECRET_KEY = env(
+    "SECRET_KEY",
+    default="django-insecure-dev-only-not-for-production",
+)
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+CSRF_TRUSTED_ORIGINS = env.list(
+    "CSRF_TRUSTED_ORIGINS",
+    default=["http://localhost:8000", "http://127.0.0.1:8000"],
+)
+# Render sets this automatically so the first deploy works before you add a custom domain.
+_render_host = env("RENDER_EXTERNAL_HOSTNAME", default="")
+if _render_host:
+    ALLOWED_HOSTS.append(_render_host)
+    _render_origin = f"https://{_render_host}"
+    if _render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(_render_origin)
 
 
 # Application definition
@@ -47,6 +65,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -79,11 +98,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Set DATABASE_URL in backend/.env to use Postgres.
+# If it is missing, local SQLite is still used so tests and a bare clone work.
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+    )
 }
 
 
@@ -122,8 +143,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
+    },
+}
 
-# User-uploaded files (avatars, cover images). Served by Django only when DEBUG=True.
+# User-uploaded files (avatars, cover images). Disk is wiped on most PaaS hosts.
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -134,10 +164,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Vite (Phase 3) runs on :5173. Browsers will call :8000 from that origin,
 # so CORS must allow it. CorsMiddleware sits above CommonMiddleware.
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-]
+CORS_ALLOWED_ORIGINS = env.list(
+    'CORS_ALLOWED_ORIGINS',
+    default=[
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+    ],
+)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

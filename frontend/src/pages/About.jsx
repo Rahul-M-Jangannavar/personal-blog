@@ -17,6 +17,9 @@ export function About() {
   return (
     <article className="stack">
       <h1>Hello, I'm Rahul</h1>
+      {profile.avatar ? (
+        <img className="avatar" src={profile.avatar} alt={profile.name} />
+      ) : null}
       <div className="markdown">
         <Markdown>{profile.about}</Markdown>
       </div>

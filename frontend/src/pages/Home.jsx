@@ -27,6 +27,9 @@ export function Home() {
   return (
     <div className="stack">
       <section className="hero">
+        {profile.avatar ? (
+          <img className="avatar" src={profile.avatar} alt={profile.name} />
+        ) : null}
         <h1>{profile.name}</h1>
         <div className="lede markdown">
           <Markdown>{profile.bio}</Markdown>
