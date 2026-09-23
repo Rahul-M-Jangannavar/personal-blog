@@ -54,7 +54,7 @@ export function Contact() {
   return (
     <div className="stack">
       <h1>Contact</h1>
-      <p className="muted">Messages land in the Django admin as ContactMessage rows.</p>
+      <p className="muted">Please leave a message for any suggestions</p>
 
       {success ? (
         <p className="status status-success" role="status">
