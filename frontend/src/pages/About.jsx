@@ -34,27 +34,6 @@ export function About() {
         ))}
       </p>
 
-      <h2>Links</h2>
-      <ul className="plain-list">
-        <li>
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-        </li>
-        {profile.github_url ? (
-          <li>
-            <a href={profile.github_url}>{profile.github_url}</a>
-          </li>
-        ) : null}
-        {profile.linkedin_url ? (
-          <li>
-            <a href={profile.linkedin_url}>{profile.linkedin_url}</a>
-          </li>
-        ) : null}
-        {profile.website_url ? (
-          <li>
-            <a href={profile.website_url}>{profile.website_url}</a>
-          </li>
-        ) : null}
-      </ul>
     </article>
   );
 }
