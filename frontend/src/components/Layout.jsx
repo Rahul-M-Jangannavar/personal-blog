@@ -2,6 +2,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
+import { useProfile } from "../hooks/useProfile";
 
 const NAV = [
   { to: "/", label: "Home", end: true },
@@ -13,13 +14,20 @@ const NAV = [
 export function Layout() {
   const { theme, toggleTheme } = useTheme();
   const { isAuthenticated, logout, ready } = useAuth();
+  const { profile } = useProfile();
 
   return (
     <div className="shell">
       <header className="site-header">
-        <Link to="/" className="brand">
-          Achintya
-        </Link>
+        {profile?.linkedin_url ? (
+          <a href={profile.linkedin_url} target="_blank" rel="noreferrer" className="brand">
+            Rahul
+          </a>
+        ) : (
+          <Link to="/" className="brand">
+            Rahul
+          </Link>
+        )}
         <nav className="nav">
           {NAV.map((item) => (
             <NavLink
