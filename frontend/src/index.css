@@ -172,10 +172,11 @@ button:disabled {
 
 .hero-text {
   flex-grow: 1;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  padding-left: 2rem;
 }
 
 .hero-greeting {
