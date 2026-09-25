@@ -4,9 +4,9 @@ services:
     name: personal-blog-api
     runtime: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    # preDeployCommand is paid-plan only, so migrations run in the build instead.
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput && python create_superuser.py
     startCommand: gunicorn config.wsgi:application
-    preDeployCommand: python manage.py migrate && python create_superuser.py
     envVars:
       - key: PYTHON_VERSION
         value: "3.12.3"
@@ -18,6 +18,12 @@ services:
         fromDatabase:
           name: personal-blog-db
           property: connectionString
+      - key: DJANGO_SUPERUSER_USERNAME
+        sync: false
+      - key: DJANGO_SUPERUSER_EMAIL
+        sync: false
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false
 
 databases:
   - name: personal-blog-db
