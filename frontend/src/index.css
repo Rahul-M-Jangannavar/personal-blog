@@ -57,9 +57,9 @@ h3 {
 .site-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(50, 50, 50, 0.1);
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: none;
   flex-wrap: wrap;
 }
 
@@ -69,24 +69,32 @@ h3 {
   color: #DDD0C8;
 }
 
+.theme-root[data-theme="dark"] .brand {
+  color: #DDD0C8;
+}
+
 .brand {
   font-family: "Georgia", "Times New Roman", serif;
   font-weight: 500;
-  font-size: 1.5rem;
-  letter-spacing: 0.1em;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
   text-decoration: none;
   margin-right: auto;
+  color: #323232;
 }
 
 .nav {
   display: flex;
-  gap: 14px;
+  gap: 2.5rem;
+  align-items: center;
 }
 
 .nav-link {
   text-decoration: none;
   color: #323232;
   opacity: 0.8;
+  font-weight: 500;
+  font-size: 1.05rem;
 }
 
 .theme-root[data-theme="dark"] .nav-link {
@@ -104,15 +112,18 @@ button {
   font-weight: 600;
   cursor: pointer;
   border: none;
-  background: #323232;
-  color: #DDD0C8;
-  padding: 10px 24px;
-  border-radius: 9999px;
+  background: transparent;
+  color: #323232;
+  padding: 8px;
+  border-radius: 50%;
   transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
-  opacity: 0.9;
+  opacity: 0.7;
 }
 
 button:disabled {
@@ -402,6 +413,6 @@ select:focus {
 }
 
 .theme-root[data-theme="dark"] button {
-  background: #DDD0C8;
-  color: #323232;
+  background: transparent;
+  color: #DDD0C8;
 }
