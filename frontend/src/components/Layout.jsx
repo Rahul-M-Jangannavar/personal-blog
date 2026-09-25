@@ -83,7 +83,8 @@ export function Layout() {
       </main>
 
       <footer className="site-footer">
-        <p>Personal blog · live data from the Django API</p>
+        <p>© 2026 Rahul Janganavar. All rights reserved.
+This website does not use cookies.</p>
       </footer>
     </div>
   );
