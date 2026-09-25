@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Markdown from "react-markdown";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 import { EmptyState } from "../components/EmptyState";
 import { ErrorMessage } from "../components/ErrorMessage";
@@ -28,9 +29,14 @@ export function Home() {
     <div className="stack">
       <section className="hero">
         <div className="hero-avatar-container">
-          {profile.avatar ? (
-            <img className="hero-avatar" src={profile.avatar} alt={profile.name} />
-          ) : null}
+          <Player
+            src="https://assets8.lottiefiles.com/packages/lf20_gljfnvqz.json"
+            loop
+            autoplay
+            background="rgb(43, 119, 191)"
+            style={{ borderRadius: "50%", width: "100%", height: "100%" }}
+            className="lottie"
+          />
         </div>
         
         <div className="hero-text">
