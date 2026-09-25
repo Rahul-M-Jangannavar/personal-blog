@@ -285,6 +285,53 @@ button:disabled {
   border-color: #323232;
 }
 
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid rgba(50, 50, 50, 0.15);
+  border-radius: 12px;
+  background: transparent;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.skill-item:hover {
+  transform: translateY(-5px);
+  border-color: rgba(50, 50, 50, 0.4);
+}
+
+.skill-item img {
+  width: 48px;
+  height: 48px;
+}
+
+.skill-item span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #323232;
+}
+
+.theme-root[data-theme="dark"] .skill-item {
+  border-color: rgba(221, 208, 200, 0.2);
+}
+
+.theme-root[data-theme="dark"] .skill-item:hover {
+  border-color: rgba(221, 208, 200, 0.5);
+}
+
+.theme-root[data-theme="dark"] .skill-item span {
+  color: #DDD0C8;
+}
+
 .theme-root[data-theme="dark"] .tag-active {
   background: #DDD0C8;
   color: #323232;

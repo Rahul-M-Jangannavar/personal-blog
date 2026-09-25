@@ -17,22 +17,46 @@ export function About() {
   return (
     <article className="stack">
       <h1>Hello, I'm Rahul</h1>
-      {profile.avatar ? (
-        <img className="avatar" src={profile.avatar} alt={profile.name} />
-      ) : null}
       <div className="markdown">
         <Markdown>{profile.about}</Markdown>
       </div>
       {/* {profile.location ? <p className="muted">{profile.location}</p> : null} */}
 
       <h2>Skills</h2>
-      <p className="tag-row">
-        {(profile.skills_list ?? []).map((skill) => (
-          <span key={skill} className="tag">
-            {skill}
-          </span>
-        ))}
-      </p>
+      <div className="skills-grid">
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" />
+          <span>PostgreSQL</span>
+        </div>
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+          <span>Python</span>
+        </div>
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" />
+          <span>Django</span>
+        </div>
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
+          <span>React</span>
+        </div>
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS" />
+          <span>CSS</span>
+        </div>
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML" />
+          <span>HTML</span>
+        </div>
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
+          <span>Java</span>
+        </div>
+        <div className="skill-item">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" />
+          <span>JavaScript</span>
+        </div>
+      </div>
 
     </article>
   );
