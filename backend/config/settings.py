@@ -171,6 +171,14 @@ CORS_ALLOWED_ORIGINS = env.list(
         'http://127.0.0.1:5173',
     ],
 )
+_frontend_origin = env("FRONTEND_ORIGIN", default="")
+if _frontend_origin and _frontend_origin not in CORS_ALLOWED_ORIGINS:
+    CORS_ALLOWED_ORIGINS.append(_frontend_origin)
+# Split-host deploy on Render: the static site origin is not known until first
+# deploy, so allow any https://*.onrender.com host. Tighten via FRONTEND_ORIGIN
+# or CORS_ALLOWED_ORIGINS once you have the real URL (or a custom domain).
+if not DEBUG:
+    CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://[\w-]+\.onrender\.com$"]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
