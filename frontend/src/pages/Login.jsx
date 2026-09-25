@@ -38,7 +38,7 @@ export function Login() {
   return (
     <div className="stack">
       <h1>Log in</h1>
-      <p className="muted">This is only for you — use the Django superuser.</p>
+      <p className="muted">Login page in only for admin</p>
       <ErrorMessage message={error} />
       <form className="stack" onSubmit={handleSubmit}>
         <label className="field">

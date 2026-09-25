@@ -5,7 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 
 const NAV = [
   { to: "/", label: "Home", end: true },
-  { to: "/about", label: "About" },
+  { to: "/about", label: "About Me" },
   { to: "/blog", label: "Blog" },
   { to: "/contact", label: "Contact" },
 ];
