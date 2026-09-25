@@ -23,7 +23,7 @@ C:\Users\rahulja\.cursor\projects\c-Users-rahulja-LearnRctAndPython\canvases\rea
 | Database | SQLite in development, Postgres in production                 |
 | Frontend | React 19 + Vite, React Router, TanStack Query                 |
 | Styling  | Tailwind CSS                                                  |
-| Hosting  | API on Render, frontend on Vercel                             |
+| Hosting  | API and React static site on Render                           |
 
 ## Pages
 
@@ -137,3 +137,15 @@ The React app stays on localhost until the API has a public URL.
 9. SSH is not available — use the Render shell, or `python manage.py createsuperuser` from a one-off job / the service shell.
 
 Avatars and cover images on local disk will disappear when Render restarts. Cloudinary/S3 is a follow-up.
+
+## Deploy the React app (Render static site)
+
+The API and the SPA are separate hosts. Vite bakes `VITE_API_URL` in at build time.
+
+1. Merge the latest `render.yaml` (or create **New → Static Site** from the dashboard).
+2. Root directory: `frontend`.
+3. Build: `npm ci && npm run build`
+4. Publish directory: `dist`
+5. Env var: `VITE_API_URL=https://personal-blog-oj84.onrender.com` (no trailing slash).
+6. Redirects/Rewrites: source `/*`, destination `/index.html`, action **Rewrite** (so `/blog` and `/login` do not 404 on refresh).
+7. After the first frontend URL exists, set `FRONTEND_ORIGIN=https://YOUR-STATIC-SITE.onrender.com` on the API service (optional once `*.onrender.com` CORS is in settings) and redeploy the API if you tightened CORS.

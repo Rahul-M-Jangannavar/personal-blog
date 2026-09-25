@@ -14,5 +14,6 @@ urlpatterns = [
     path("api/", include("blog.urls")),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Avatars and covers are requested from the API host after a split-origin
+# deploy. Disk is still ephemeral on Render; this just makes the URLs work.
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
