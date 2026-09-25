@@ -4,12 +4,10 @@ from .models import Comment, ContactMessage, Post, Profile, Tag
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    """One row, read-mostly. skills_list is a convenience for the About page.
+    """One row, read-mostly.
 
     avatar becomes an absolute URL because the view passes request in context.
     """
-
-    skills_list = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
@@ -25,14 +23,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "github_url",
             "linkedin_url",
             "website_url",
-            "skills",
-            "skills_list",
         )
-
-    def get_skills_list(self, obj):
-        if not obj.skills:
-            return []
-        return [part.strip() for part in obj.skills.split(",") if part.strip()]
 
 
 class TagSerializer(serializers.ModelSerializer):

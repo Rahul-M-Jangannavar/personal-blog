@@ -27,10 +27,6 @@ class Profile(models.Model):
     github_url = models.URLField(blank=True)
     linkedin_url = models.URLField(blank=True)
     website_url = models.URLField(blank=True)
-    skills = models.TextField(
-        blank=True,
-        help_text="Comma-separated list shown on About, e.g. Python, Django, React.",
-    )
 
     def __str__(self):
         return self.name
