@@ -286,13 +286,34 @@ button:disabled {
 }
 
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  display: flex;
   gap: 1.5rem;
   margin-top: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+
+.skills-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.skills-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.skills-grid::-webkit-scrollbar-thumb {
+  background-color: rgba(50, 50, 50, 0.2);
+  border-radius: 20px;
+}
+
+.theme-root[data-theme="dark"] .skills-grid::-webkit-scrollbar-thumb {
+  background-color: rgba(221, 208, 200, 0.2);
 }
 
 .skill-item {
+  flex: 0 0 auto;
+  min-width: 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
