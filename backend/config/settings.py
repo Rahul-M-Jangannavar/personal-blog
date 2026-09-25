@@ -198,6 +198,25 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
+# With DEBUG=False Django only mails request errors, so hosted logs show a bare
+# 500 with no traceback. Send them to stdout instead.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
+
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Personal blog API',
     'DESCRIPTION': 'JSON API for the React + Django personal blog.',
