@@ -57,10 +57,41 @@ h3 {
 .site-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 24px;
   padding: 24px 0;
   border-bottom: none;
   flex-wrap: wrap;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: auto;
+}
+
+.hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .theme-root[data-theme="dark"] .site-header,
@@ -208,17 +239,42 @@ button:disabled {
 }
 
 @media (max-width: 768px) {
+  .header-top {
+    width: 100%;
+  }
+  .hamburger {
+    display: block;
+  }
+  .nav-container {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(50, 50, 50, 0.1);
+    margin-top: 1rem;
+  }
+  .nav-container.open {
+    display: flex;
+  }
+  .theme-root[data-theme="dark"] .nav-container {
+    border-color: rgba(221, 208, 200, 0.1);
+  }
+  .nav {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .nav-actions {
+    flex-direction: column;
+    width: 100%;
+  }
   .site-header {
-    justify-content: center;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 0;
   }
   .brand {
     margin-right: 0;
-  }
-  .nav {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
   }
   .hero {
     flex-direction: column;
