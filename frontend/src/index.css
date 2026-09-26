@@ -207,13 +207,36 @@ button:disabled {
   align-items: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .site-header {
+    justify-content: center;
+    gap: 16px;
+  }
+  .brand {
+    margin-right: 0;
+  }
+  .nav {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   .hero {
     flex-direction: column;
     text-align: center;
+    gap: 2rem;
+    padding: 2rem 0;
   }
   .hero-text {
-    padding-right: 0;
+    padding-left: 0;
+    align-items: center;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero-avatar-container {
+    width: 200px;
+    height: 200px;
   }
   .hero-socials {
     flex-direction: row;
