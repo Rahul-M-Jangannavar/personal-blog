@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.db.models import Prefetch
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, mixins, status, viewsets
@@ -33,11 +34,15 @@ class ProfileViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Profile.objects.all()
 
     def list(self, request, *args, **kwargs):
-        profile = Profile.objects.first()
-        if profile is None:
-            raise NotFound("Create a Profile in /admin/ first.")
-        serializer = self.get_serializer(profile)
-        return Response(serializer.data)
+        data = cache.get("profile_data")
+        if not data:
+            profile = Profile.objects.first()
+            if profile is None:
+                raise NotFound("Create a Profile in /admin/ first.")
+            serializer = self.get_serializer(profile)
+            data = serializer.data
+            cache.set("profile_data", data, timeout=60 * 60 * 24)  # Cache for 24 hours
+        return Response(data)
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
