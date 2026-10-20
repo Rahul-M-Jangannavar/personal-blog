@@ -34,7 +34,7 @@ export function Studio() {
         posts.map((post) => (
           <article key={post.slug} className="card">
             <p className="muted">
-              {post.status}
+              {post.status === "published" ? "Published" : "Draft (hidden from Posts)"}
               {post.published_at
                 ? ` · ${new Date(post.published_at).toLocaleDateString("en-IN")}`
                 : ""}
