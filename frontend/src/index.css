@@ -162,6 +162,23 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button-secondary {
+  border: 1px solid rgba(50, 50, 50, 0.35);
+  border-radius: 9999px;
+  padding: 10px 24px;
+  font-weight: 600;
+}
+
+.theme-root[data-theme="dark"] .button-secondary {
+  border-color: rgba(221, 208, 200, 0.35);
+}
+
 .site-main {
   flex: 1;
   padding: 32px 0 48px;

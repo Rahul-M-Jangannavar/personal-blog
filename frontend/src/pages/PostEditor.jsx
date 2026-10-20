@@ -12,7 +12,7 @@ const EMPTY = {
   slug: "",
   excerpt: "",
   body: "",
-  status: "draft",
+  status: "published",
   tag_slugs: [],
 };
 
@@ -47,18 +47,19 @@ export function PostEditor() {
   }, [postQuery.data]);
 
   const mutation = useMutation({
-    mutationFn: () => {
+    mutationFn: (saveStatus) => {
       const payload = {
         title: values.title,
         excerpt: values.excerpt,
         body: values.body,
-        status: values.status,
+        status: saveStatus ?? values.status,
         tag_slugs: values.tag_slugs,
       };
       if (values.slug) payload.slug = values.slug;
       return isNew ? createPost(payload, file) : updatePost(slug, payload, file);
     },
     onSuccess: (post) => {
+      setValues((current) => ({ ...current, status: post.status }));
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       queryClient.invalidateQueries({ queryKey: ["studio-posts"] });
       queryClient.invalidateQueries({ queryKey: ["post", post.slug] });
@@ -110,8 +111,6 @@ export function PostEditor() {
         className="stack"
         onSubmit={(event) => {
           event.preventDefault();
-          setFieldErrors({});
-          mutation.mutate();
         }}
       >
         <label className="field">
@@ -136,13 +135,11 @@ export function PostEditor() {
           <textarea name="body" rows={16} value={values.body} onChange={handleChange} />
           {fieldErrors.body ? <span className="field-error">{fieldErrors.body}</span> : null}
         </label>
-        <label className="field">
-          Status
-          <select name="status" value={values.status} onChange={handleChange}>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-          </select>
-        </label>
+        <p className="muted">
+          {values.status === "published"
+            ? "Published posts appear on Home and Posts. Save as draft to hide them from visitors."
+            : "This post is a draft — only you see it in Studio until you publish."}
+        </p>
         <fieldset className="field">
           <legend>Tags</legend>
           <div className="tag-row">
@@ -172,9 +169,29 @@ export function PostEditor() {
             <img className="cover" src={postQuery.data.cover_image} alt="" />
           ) : null}
         </label>
-        <button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Saving…" : "Save"}
-        </button>
+        <div className="editor-actions">
+          <button
+            type="button"
+            disabled={mutation.isPending}
+            onClick={() => {
+              setFieldErrors({});
+              mutation.mutate("published");
+            }}
+          >
+            {mutation.isPending ? "Saving…" : isNew ? "Publish" : "Update & publish"}
+          </button>
+          <button
+            type="button"
+            className="button-secondary"
+            disabled={mutation.isPending}
+            onClick={() => {
+              setFieldErrors({});
+              mutation.mutate("draft");
+            }}
+          >
+            Save as draft
+          </button>
+        </div>
       </form>
     </div>
   );
