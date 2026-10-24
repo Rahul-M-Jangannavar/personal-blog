@@ -98,14 +98,26 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Set DATABASE_URL in backend/.env to use Postgres.
+# Set DATABASE_URL in backend/.env (or Render env) to use Postgres (e.g. Neon).
 # If it is missing, local SQLite is still used so tests and a bare clone work.
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-    )
-}
+_database_url = env("DATABASE_URL", default="")
+if _database_url.startswith(("postgres://", "postgresql://")):
+    # Neon and most cloud Postgres require TLS; URL usually includes ?sslmode=require.
+    _ssl = "sslmode=require" in _database_url or "neon.tech" in _database_url
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=_database_url,
+            conn_max_age=600,
+            ssl_require=_ssl,
+        )
+    }
+else:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+            conn_max_age=600,
+        )
+    }
 
 
 # Password validation
