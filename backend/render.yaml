@@ -13,7 +13,7 @@ services:
         value: "False"
       - key: SECRET_KEY
         generateValue: true
-      - key: DATABASE_URL
+      - key: NEON_DATABASE_URL
         sync: false
       - key: ALLOWED_HOSTS
         sync: false

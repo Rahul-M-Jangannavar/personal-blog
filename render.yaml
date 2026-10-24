@@ -14,8 +14,8 @@ services:
         value: "False"
       - key: SECRET_KEY
         generateValue: true
-      # Paste Neon connection string in Render dashboard (External / pooled URL).
-      - key: DATABASE_URL
+      # Neon URL — use this if Render still locks expired DATABASE_URL.
+      - key: NEON_DATABASE_URL
         sync: false
       - key: DJANGO_SUPERUSER_USERNAME
         sync: false
