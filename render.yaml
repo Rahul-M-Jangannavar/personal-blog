@@ -14,9 +14,10 @@ services:
         value: "False"
       - key: SECRET_KEY
         generateValue: true
-      # Neon URL — use this if Render still locks expired DATABASE_URL.
-      - key: NEON_DATABASE_URL
-        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: personal-blog-db
+          property: connectionString
       - key: DJANGO_SUPERUSER_USERNAME
         sync: false
       - key: DJANGO_SUPERUSER_EMAIL
@@ -40,3 +41,6 @@ services:
       - key: VITE_API_URL
         value: https://personal-blog-oj84.onrender.com
 
+databases:
+  - name: personal-blog-db
+    plan: free
